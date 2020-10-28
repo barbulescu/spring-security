@@ -11,6 +11,6 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic();
         http.authorizeRequests()
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
     }
 }
