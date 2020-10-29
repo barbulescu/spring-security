@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet  id="create_tables"  author="marius">
+        <createTable  tableName="user">
+            <column  name="id"  type="int" autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="username"  type="varchar(45)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="password"  type="TEXT">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="algorithm"  type="varchar(45)">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <createTable  tableName="authority">
+            <column  name="id"  type="int" autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="name"  type="varchar(45)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="user"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <createTable  tableName="product">
+            <column  name="id"  type="int" autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="name"  type="varchar(45)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="price"  type="varchar(45)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="currency"  type="varchar(45)">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="insert_data" author="marius">
+        <insert tableName="user">
+            <column name="id" value="1"/>
+            <column name="username" value="john"/>
+            <column name="password" value="$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG"/>
+            <column name="algorithm" value="BCRYPT"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="1"/>
+            <column name="name" value="READ"/>
+            <column name="user" value="1"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="2"/>
+            <column name="name" value="WRITE"/>
+            <column name="user" value="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="id" value="1"/>
+            <column name="name" value="Chocolate"/>
+            <column name="price" value="10"/>
+            <column name="currency" value="USD"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
