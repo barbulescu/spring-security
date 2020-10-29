@@ -1,16 +1,16 @@
 package com.barbulescu.springsecurity.web;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
+@Component
+public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationProviderService authenticationProvider;
 
-    public WebAuthorizationConfig(AuthenticationProviderService authenticationProvider) {
+    public AuthorizationConfiguration(AuthenticationProviderService authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
 
