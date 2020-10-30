@@ -24,7 +24,12 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/main", true);
 
         http.authorizeRequests()
-                .anyRequest().authenticated();
+                .anyRequest()
+//                .hasAnyAuthority("READ", "WRITE")
+//                .access("hasAuthority('READ') and !hasAuthority('DELETE')")
+//                .access("T(java.time.LocalTime).now().isAfter(T(java.time.LocalTime).of(12, 0))")
+                .hasRole("ADMIN")
+        ;
     }
 
     @Override

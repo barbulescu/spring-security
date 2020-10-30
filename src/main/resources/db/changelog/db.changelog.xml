@@ -5,64 +5,137 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 	  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
-    <changeSet  id="create_tables"  author="marius">
-        <createTable  tableName="user">
-            <column  name="id"  type="int" autoIncrement="true">
-                <constraints  primaryKey="true"  nullable="false"/>
+    <changeSet id="create_tables" author="marius">
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column  name="username"  type="varchar(45)">
-                <constraints  nullable="false"/>
+            <column name="username" type="varchar(45)">
+                <constraints nullable="false"/>
             </column>
-            <column  name="password"  type="TEXT">
-                <constraints  nullable="false"/>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
             </column>
-            <column  name="algorithm"  type="varchar(45)">
-                <constraints  nullable="false"/>
-            </column>
-        </createTable>
-        <createTable  tableName="authority">
-            <column  name="id"  type="int" autoIncrement="true">
-                <constraints  primaryKey="true"  nullable="false"/>
-            </column>
-            <column  name="name"  type="varchar(45)">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="user"  type="int">
-                <constraints  nullable="false"/>
+            <column name="algorithm" type="varchar(45)">
+                <constraints nullable="false"/>
             </column>
         </createTable>
-        <createTable  tableName="product">
-            <column  name="id"  type="int" autoIncrement="true">
-                <constraints  primaryKey="true"  nullable="false"/>
+        <createTable tableName="authority">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column  name="name"  type="varchar(45)">
-                <constraints  nullable="false"/>
+            <column name="name" type="varchar(45)">
+                <constraints nullable="false"/>
             </column>
-            <column  name="price"  type="varchar(45)">
-                <constraints  nullable="false"/>
+        </createTable>
+        <createTable tableName="user_authority">
+            <column name="user" type="int">
+                <constraints nullable="false"/>
             </column>
-            <column  name="currency"  type="varchar(45)">
-                <constraints  nullable="false"/>
+            <column name="authority" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="varchar(45)">
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="insert_data" author="marius">
+
+    <changeSet id="insert_users" author="marius">
         <insert tableName="user">
             <column name="id" value="1"/>
             <column name="username" value="john"/>
             <column name="password" value="$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG"/>
             <column name="algorithm" value="BCRYPT"/>
         </insert>
+        <insert tableName="user">
+            <column name="id" value="2"/>
+            <column name="username" value="jane"/>
+            <column name="password" value="$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG"/>
+            <column name="algorithm" value="BCRYPT"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert_authorities" author="marius">
         <insert tableName="authority">
             <column name="id" value="1"/>
             <column name="name" value="READ"/>
-            <column name="user" value="1"/>
         </insert>
         <insert tableName="authority">
             <column name="id" value="2"/>
             <column name="name" value="WRITE"/>
-            <column name="user" value="1"/>
         </insert>
+        <insert tableName="authority">
+            <column name="id" value="3"/>
+            <column name="name" value="DELETE"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="4"/>
+            <column name="name" value="UPDATE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert_roles" author="marius">
+        <insert tableName="authority">
+            <column name="id" value="5"/>
+            <column name="name" value="ROLE_MANAGER"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="6"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="link_users_authorities" author="marius">
+        <insert tableName="user_authority">
+            <column name="user" value="1"/>
+            <column name="authority" value="1"/>
+        </insert>
+        <insert tableName="user_authority">
+            <column name="user" value="1"/>
+            <column name="authority" value="2"/>
+        </insert>
+        <insert tableName="user_authority">
+            <column name="user" value="1"/>
+            <column name="authority" value="3"/>
+        </insert>
+        <insert tableName="user_authority">
+            <column name="user" value="1"/>
+            <column name="authority" value="4"/>
+        </insert>
+        <insert tableName="user_authority">
+            <column name="user" value="2"/>
+            <column name="authority" value="1"/>
+        </insert>
+        <insert tableName="user_authority">
+            <column name="user" value="2"/>
+            <column name="authority" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="link_users_roles" author="marius">
+        <insert tableName="user_authority">
+            <column name="user" value="1"/>
+            <column name="authority" value="5"/>
+        </insert>
+        <insert tableName="user_authority">
+            <column name="user" value="2"/>
+            <column name="authority" value="6"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert_products" author="marius">
         <insert tableName="product">
             <column name="id" value="1"/>
             <column name="name" value="Chocolate"/>

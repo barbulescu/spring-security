@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
+
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Data
@@ -20,6 +22,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private EncryptionAlgorithm algorithm;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Authority> authorities;
+    @ManyToMany(fetch = EAGER)
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = @JoinColumn(name = "user"),
+            inverseJoinColumns = @JoinColumn(name = "authority"))
+    private Set<Authority> authorities;
 }
