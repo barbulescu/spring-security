@@ -10,9 +10,13 @@ import org.springframework.stereotype.Component;
 public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationProviderService authenticationProvider;
+    private final StaticKeyAuthenticationFilter staticKeyAuthenticationFilter;
 
-    public AuthorizationConfiguration(AuthenticationProviderService authenticationProvider) {
+    public AuthorizationConfiguration(
+            AuthenticationProviderService authenticationProvider,
+            StaticKeyAuthenticationFilter staticKeyAuthenticationFilter) {
         this.authenticationProvider = authenticationProvider;
+        this.staticKeyAuthenticationFilter = staticKeyAuthenticationFilter;
     }
 
     @Override
@@ -20,8 +24,7 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
         http.httpBasic();
 
         http
-                .addFilterBefore(new RequestValidationFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new AuthenticationLoggingFilter(), BasicAuthenticationFilter.class)
+                .addFilterAt(staticKeyAuthenticationFilter, BasicAuthenticationFilter.class)
                 .authorizeRequests()
                 .anyRequest()
                 .permitAll();
