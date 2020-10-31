@@ -1,7 +1,6 @@
 package com.barbulescu.springsecurity.web;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,6 @@ import java.io.IOException;
 
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
-@Component
 public class StaticKeyAuthenticationFilter implements Filter {
 
     private final String authorizationKey;

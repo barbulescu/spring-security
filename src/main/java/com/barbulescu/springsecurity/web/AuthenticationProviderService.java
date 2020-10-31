@@ -3,6 +3,7 @@ package com.barbulescu.springsecurity.web;
 import com.barbulescu.springsecurity.db.EncryptionAlgorithm;
 import com.barbulescu.springsecurity.db.UserRepository;
 import lombok.Value;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Value
+@Log4j2
 public class AuthenticationProviderService implements AuthenticationProvider {
 
     UserRepository userDetailsService;
@@ -50,6 +52,7 @@ public class AuthenticationProviderService implements AuthenticationProvider {
 
     private Authentication checkPassword(CustomUserDetails user, String rawPassword, PasswordEncoder encoder) {
         if (!encoder.matches(rawPassword, user.getPassword())) {
+            log.error("Bad credentials");
             throw new BadCredentialsException("Bad credentials");
         }
 

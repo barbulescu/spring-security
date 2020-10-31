@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.CompletableFuture;
@@ -15,9 +16,14 @@ import java.util.concurrent.CompletableFuture;
 @Log4j2
 public class HelloController {
 
-    @GetMapping("/hello")
-    String sayHello() {
-        return "Hello!";
+    @GetMapping("/abc")
+    String getHello() {
+        return "[GET] Hello!";
+    }
+
+    @PostMapping("/abc")
+    String postHello() {
+        return "[POST] Hello!";
     }
 
     @GetMapping("/hello/{name}")
@@ -41,7 +47,7 @@ public class HelloController {
 
     @GetMapping("/hola/{name}")
     String sayHola(@PathVariable String name, Authentication authentication) {
-        logAuthenticationDetails(authentication, "ciao");
+        logAuthenticationDetails(authentication, "hola");
         return "Hola " + name + "!";
     }
 
