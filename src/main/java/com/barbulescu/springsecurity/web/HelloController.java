@@ -17,18 +17,31 @@ public class HelloController {
 
     @GetMapping("/hello/{name}")
     String sayHello(@PathVariable String name, Authentication authentication) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        log.info("authentication from SecurityContext: {}", securityContext.getAuthentication());
-        log.info("injected authentication: {}", authentication);
+        logAuthenticationDetails(authentication, "hello");
         return "Hello " + name + "!";
     }
-
     @GetMapping("/hello/async/{name}")
     @Async
     CompletableFuture<String> sayHelloAsync(@PathVariable String name, Authentication authentication) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        log.info("[async] authentication from SecurityContext: {}", securityContext.getAuthentication());
-        log.info("[async] injected authentication: {}", authentication);
+        logAuthenticationDetails(authentication, "hello async");
         return CompletableFuture.completedFuture("Hello " + name + "!");
+    }
+
+    @GetMapping("/ciao/{name}")
+    String sayCiao(@PathVariable String name, Authentication authentication) {
+        logAuthenticationDetails(authentication, "ciao");
+        return "Ciao " + name + "!";
+    }
+
+    @GetMapping("/hola/{name}")
+    String sayHola(@PathVariable String name, Authentication authentication) {
+        logAuthenticationDetails(authentication, "ciao");
+        return "Hola " + name + "!";
+    }
+
+    private void logAuthenticationDetails(Authentication authentication, String prefix) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        log.info("[{}] authentication from SecurityContext: {}", prefix, securityContext.getAuthentication());
+        log.info("[{}] injected authentication: {}", prefix, authentication);
     }
 }

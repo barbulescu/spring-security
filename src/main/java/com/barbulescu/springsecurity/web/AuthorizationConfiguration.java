@@ -1,5 +1,6 @@
 package com.barbulescu.springsecurity.web;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,20 +17,28 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic(conf -> {
-            conf.realmName("bom");
-            conf.authenticationEntryPoint(new CustomEntryPoint());
-        });
-        http.formLogin()
-                .defaultSuccessUrl("/main", true);
+        http.httpBasic();
 
-        http.authorizeRequests()
-                .anyRequest()
+        //        http.formLogin()
+//                .defaultSuccessUrl("/main", true);
+
+//        http.authorizeRequests()
+//                .mvcMatchers("/hello/*").hasRole("ADMIN")
+//                .mvcMatchers("/ciao/*").hasRole("MANAGER")
+//                .anyRequest()
 //                .hasAnyAuthority("READ", "WRITE")
 //                .access("hasAuthority('READ') and !hasAuthority('DELETE')")
 //                .access("T(java.time.LocalTime).now().isAfter(T(java.time.LocalTime).of(12, 0))")
-                .hasRole("ADMIN")
-        ;
+//                .hasRole("ADMIN")
+//                .authenticated()
+
+        http.authorizeRequests()
+                .mvcMatchers(HttpMethod.GET, "/a").authenticated()
+                .mvcMatchers(HttpMethod.POST, "/a").permitAll()
+                .anyRequest()
+                .denyAll();
+
+        http.csrf().disable();
     }
 
     @Override

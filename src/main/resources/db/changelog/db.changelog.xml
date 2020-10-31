@@ -127,11 +127,11 @@
     <changeSet id="link_users_roles" author="marius">
         <insert tableName="user_authority">
             <column name="user" value="1"/>
-            <column name="authority" value="5"/>
+            <column name="authority" value="6"/>
         </insert>
         <insert tableName="user_authority">
             <column name="user" value="2"/>
-            <column name="authority" value="6"/>
+            <column name="authority" value="5"/>
         </insert>
     </changeSet>
 
