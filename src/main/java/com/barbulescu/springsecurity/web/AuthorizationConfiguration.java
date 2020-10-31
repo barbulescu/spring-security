@@ -20,10 +20,8 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
         http.httpBasic();
 
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/a/b/**").authenticated()
-                .anyRequest().permitAll();
-
-        http.csrf().disable();
+                .mvcMatchers( "/product/{code:^[0-9]*$}").permitAll()
+                .anyRequest().denyAll();
     }
 
     @Override
