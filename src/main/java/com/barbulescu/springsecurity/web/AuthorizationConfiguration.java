@@ -1,6 +1,5 @@
 package com.barbulescu.springsecurity.web;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,8 +19,7 @@ public class AuthorizationConfiguration extends WebSecurityConfigurerAdapter {
         http.httpBasic();
 
         http.authorizeRequests()
-                .mvcMatchers( "/product/{code:^[0-9]*$}").permitAll()
-                .anyRequest().denyAll();
+                .antMatchers( "/hello").authenticated();
     }
 
     @Override

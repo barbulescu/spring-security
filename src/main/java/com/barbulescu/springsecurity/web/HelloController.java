@@ -15,11 +15,17 @@ import java.util.concurrent.CompletableFuture;
 @Log4j2
 public class HelloController {
 
+    @GetMapping("/hello")
+    String sayHello() {
+        return "Hello!";
+    }
+
     @GetMapping("/hello/{name}")
     String sayHello(@PathVariable String name, Authentication authentication) {
         logAuthenticationDetails(authentication, "hello");
         return "Hello " + name + "!";
     }
+
     @GetMapping("/hello/async/{name}")
     @Async
     CompletableFuture<String> sayHelloAsync(@PathVariable String name, Authentication authentication) {
