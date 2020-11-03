@@ -1,6 +1,8 @@
-package com.barbulescu.springsecurity;
+package com.barbulescu.springsecurity.service;
 
+import com.barbulescu.springsecurity.db.Product;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -18,9 +20,9 @@ public class ProductController {
     List<Product> sell() {
         List<Product> products = new ArrayList<>();
 
-        products.add(new Product("beer", "nikolai"));
-        products.add(new Product("candy", "nikolai"));
-        products.add(new Product("chocolate", "julien"));
+        products.add(new Product(1, "beer", "nikolai"));
+        products.add(new Product(2, "candy", "nikolai"));
+        products.add(new Product(3, "chocolate", "julien"));
 
         return productService.sellProducts(products);
     }
@@ -28,5 +30,10 @@ public class ProductController {
     @GetMapping("/find")
     List<Product> findProducts() {
         return productService.findProducts();
+    }
+
+    @GetMapping("/products/{text}")
+    public List<Product> findProductsContaining(@PathVariable String text) {
+        return productService.findProducts(text);
     }
 }

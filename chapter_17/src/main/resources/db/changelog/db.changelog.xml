@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create_tables" author="marius">
+        <createTable tableName="product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="insert_products" author="marius">
+        <insert tableName="product">
+            <column name="id" value="1"/>
+            <column name="name" value="beer"/>
+            <column name="owner" value="nikolai"/>
+        </insert>
+        <insert tableName="product">
+            <column name="id" value="2"/>
+            <column name="name" value="candy"/>
+            <column name="owner" value="nikolai"/>
+        </insert>
+        <insert tableName="product">
+            <column name="id" value="3"/>
+            <column name="name" value="chocolate"/>
+            <column name="owner" value="julien"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
