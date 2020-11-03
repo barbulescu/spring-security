@@ -1,5 +1,6 @@
 package com.barbulescu.springsecurity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
@@ -12,8 +13,8 @@ import java.security.Principal;
 @RestController
 public class HelloController {
 
-    @GetMapping("/hello")
-    Mono<String> sayHello(Mono<Authentication> auth) {
+    @GetMapping("/hello1")
+    Mono<String> sayHello1(Mono<Authentication> auth) {
         return auth
                 .map(Principal::getName)
                 .map(a -> String.format("Hello %s!", a));
@@ -21,8 +22,14 @@ public class HelloController {
 
     @GetMapping("/hello2")
     Mono<String> sayHello2() {
-        return sayHello(ReactiveSecurityContextHolder.getContext()
+        return sayHello1(ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication));
+    }
+
+    @GetMapping("/hello3")
+    @PreAuthorize("hasRole('ADMIN')")
+    Mono<String> sayHello3() {
+        return Mono.just("Hello");
     }
 
     @GetMapping("/ciao")

@@ -3,6 +3,7 @@ package com.barbulescu.springsecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import java.util.function.Function;
 
 @Configuration
 @EnableWebFlux
+@EnableReactiveMethodSecurity
 public class ProjectConfig {
 
     @Bean
@@ -38,7 +40,7 @@ public class ProjectConfig {
 
         boolean restrictedTime = LocalTime.now().isAfter(LocalTime.NOON);
 
-        if (path.equals("/hello")) {
+        if (path.equals("/hello3")) {
             return a.map(isAdmin())
                     .map(auth -> auth && !restrictedTime)
                     .map(AuthorizationDecision::new);
@@ -63,12 +65,17 @@ public class ProjectConfig {
 
     @Bean
     public ReactiveUserDetailsService userDetailsService() {
-        var u = User.withUsername("john")
+        var u1 = User.withUsername("john")
                 .password("12345")
                 .roles("ADMIN")
                 .build();
 
-        return new MapReactiveUserDetailsService(u);
+        var  u2 = User.withUsername("bill")
+                .password("12345")
+                .roles("REGULAR_USER")
+                .build();
+
+        return new MapReactiveUserDetailsService(u1, u2);
     }
 
     @Bean
