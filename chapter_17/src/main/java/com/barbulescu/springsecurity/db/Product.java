@@ -1,5 +1,6 @@
 package com.barbulescu.springsecurity.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @JsonIgnore
     private int id;
     String name;
     String owner;
