@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.barbulescu</groupId>
-    <artifactId>chapter-10</artifactId>
+    <artifactId>chapter_10</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>chapter-10</name>
+    <name>chapter_10</name>
     <description>learning spring-security</description>
 
     <properties>
