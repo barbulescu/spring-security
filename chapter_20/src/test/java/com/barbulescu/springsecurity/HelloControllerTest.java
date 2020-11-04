@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,9 +50,17 @@ public class HelloControllerTest {
 
     @Test
     void helloAuthenticatedWithUser() throws Exception {
-        mvc.perform(get("/hello1")
-                .with(user("mary")))
+        var requestBuilder = get("/hello1")
+                .with(user("mary"));
+        mvc.perform(requestBuilder)
                 .andExpect(content().string("Hello!"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithUserDetails("john")
+    public void helloAuthenticated() throws Exception {
+        mvc.perform(get("/hello2"))
                 .andExpect(status().isOk());
     }
 }
