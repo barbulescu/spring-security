@@ -22,15 +22,23 @@ public class AuthenticationTests {
     @DisplayName("Test calling /hello endpoint authenticating with valid credentials returns ok.")
     public void helloAuthenticatingWithValidUser() throws Exception {
         mvc.perform(get("/hello2")
-                .with(httpBasic("john","12345")))
+                .with(httpBasic("john", "12345")))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Test calling /hello endpoint authenticating with wrong credentials returns unauthorized.")
+    public void helloAuthenticatingWithInvalidPassword() throws Exception {
+        mvc.perform(get("/hello2")
+                .with(httpBasic("john", "other")))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
     @DisplayName("Test calling /hello endpoint authenticating with wrong credentials returns unauthorized.")
     public void helloAuthenticatingWithInvalidUser() throws Exception {
         mvc.perform(get("/hello2")
-                .with(httpBasic("mary","12345")))
+                .with(httpBasic("mary", "12345")))
                 .andExpect(status().isUnauthorized());
     }
 }
