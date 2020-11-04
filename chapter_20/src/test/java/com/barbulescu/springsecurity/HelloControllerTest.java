@@ -1,5 +1,6 @@
 package com.barbulescu.springsecurity;
 
+import com.barbulescu.springsecurity.config.WithCustomUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -60,6 +61,13 @@ public class HelloControllerTest {
     @Test
     @WithUserDetails("john")
     public void helloAuthenticated() throws Exception {
+        mvc.perform(get("/hello2"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithCustomUser(username = "mary")
+    public void helloCustomAuthenticated() throws Exception {
         mvc.perform(get("/hello2"))
                 .andExpect(status().isOk());
     }
